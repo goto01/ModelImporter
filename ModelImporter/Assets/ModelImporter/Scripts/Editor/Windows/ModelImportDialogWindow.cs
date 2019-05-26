@@ -85,14 +85,19 @@ namespace ModelImporter.Editor.Windows
 		{
 			if (_currentTab == Tab.Model) DrawModelEditor();
 			else if (_currentTab == Tab.Animations) DrawAnimationsEditor();
-			else if (_currentTab == Tab.Materials) { }
+			else if (_currentTab == Tab.Materials) DrawMaterialEditor();
 		}
 
 		private void DrawModelEditor()
 		{
-			EditorGUILayout.EnumPopup("Normals", _modelImporter.importNormals);
-			EditorGUILayout.EnumPopup("Normals Mode", _modelImporter.normalCalculationMode);
-			EditorGUILayout.Slider("Smoothing angle", _modelImporter.normalSmoothingAngle, 0, 180);
+			_modelImportData.Normals = (ModelImporterNormals)EditorGUILayout.EnumPopup("Normals", 
+				_modelImportData.Normals);
+			GUI.enabled = _modelImportData.Normals == ModelImporterNormals.Calculate;
+			_modelImportData.NormalsMode = (ModelImporterNormalCalculationMode)EditorGUILayout.EnumPopup("Normals Mode", 
+				_modelImportData.NormalsMode);
+			_modelImportData.SmoothingAngle = EditorGUILayout.Slider("Smoothing angle", _modelImportData.SmoothingAngle, 0, 180);
+			GUI.enabled = true;
+			GUILayout.FlexibleSpace();
 		}
 		
 		private void DrawAnimationsEditor()
@@ -104,7 +109,7 @@ namespace ModelImporter.Editor.Windows
 			var animations = _modelImportData.AnimationsData;
 			for (var index = 0; index < animations.Count; index++)
 			{
-				EditorGUILayout.BeginHorizontal();
+				EditorGUILayout.BeginHorizontal("box");
 				DrawAnimationEditor(animations[index], index);
 				EditorGUILayout.EndHorizontal();
 			}
@@ -115,7 +120,7 @@ namespace ModelImporter.Editor.Windows
 		private void DrawAnimationEditor(ModelImportData.AnimationData animation, int index)
 		{
 			EditorGUILayout.LabelField(index.ToString(), GUILayout.Width(20));
-			if (GUILayout.Button(animation.Name)) { }
+			GUILayout.Label(animation.Name, EditorStyles.label);
 			DrawAnimationSettings(animation);
 		}
 
@@ -128,6 +133,19 @@ namespace ModelImporter.Editor.Windows
 			EditorGUILayout.LabelField("Loop blend", GUILayout.Width(70));
 			animation.LoopPose = animationData.LoopPose = EditorGUILayout.Toggle(animationData.LoopPose,
 				GUILayout.Width(16));
+		}
+
+		private void DrawMaterialEditor()
+		{
+			EditorGUILayout.HelpBox(TextResourcesHelper.ModelImportDataDialogWindow.MaterialsMessage, MessageType.Info);
+			_modelImportData.ImportMaterials = EditorGUILayout.Toggle("Import Materials", _modelImportData.ImportMaterials);
+			_modelImportData.MaterialLocation = (ModelImporterMaterialLocation)EditorGUILayout.EnumPopup("Location",
+				_modelImportData.MaterialLocation);
+			_modelImportData.MaterialsNaming = (ModelImporterMaterialName)EditorGUILayout.EnumPopup("Naming",
+				_modelImportData.MaterialsNaming);
+			_modelImportData.MaterialsSearch = (ModelImporterMaterialSearch)EditorGUILayout.EnumPopup("Search",
+				_modelImportData.MaterialsSearch);
+			GUILayout.FlexibleSpace();
 		}
 	}
 }

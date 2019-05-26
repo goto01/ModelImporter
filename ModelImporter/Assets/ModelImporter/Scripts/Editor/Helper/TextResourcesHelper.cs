@@ -24,10 +24,8 @@ namespace ModelImporter.Editor.Helper
 			private static Dictionary<Language, string> _newMidMessage = 
 				new Dictionary<Language, string>()
 				{
-					{Language.English, "You're importing model for first time or with new animations. " +
-					                   "ModelImportData will be created or overridden"},
-					{Language.Russian, "Вы импортируете модель впервые или с новой анимацией. " +
-					                   "ModelImportData будет создан или переопределен"}
+					{Language.English, "You're importing model check properties of import and press Yes"},
+					{Language.Russian, "Вы импортируете модель, проверьте свойства импорта и нажмите Yes"},
 				};
 
 			public static string NewMidMessage { get { return _newMidMessage[CurrentLanguage]; } }
@@ -67,6 +65,17 @@ namespace ModelImporter.Editor.Helper
 				};
 			
 			public static string MaterialsTab { get { return _materialsTab[CurrentLanguage]; } }
+
+			private static Dictionary<Language, string> _materialsMessage =
+				new Dictionary<Language, string>()
+				{
+					{Language.English, "With default material importing settings will be created " +
+					                   "folder with materials in the current folder. Modify only these materials. They will be attached to the model each time when reimport."},
+					{Language.Russian, "При настройках импорта материалов по умолчанию папка будет создана с материалами в текущей папке. " +
+					                   "Изменяйте только эти материалы. Они будут прикреплены к модели каждый раз при реимпорте."}
+				};
+			
+			public static string MaterialsMessage{get { return _materialsMessage[CurrentLanguage]; }}
 		}
 		 
 	}

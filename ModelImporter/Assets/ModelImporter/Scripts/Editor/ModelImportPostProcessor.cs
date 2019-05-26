@@ -10,11 +10,16 @@ namespace ModelImporter.Editor
 {
 	public class ModelImportPostProcessor : AssetPostprocessor
 	{
+		private static bool SkinImportAfterReimport = false;
 		private UnityEditor.ModelImporter ModelImporter{get { return (UnityEditor.ModelImporter) assetImporter; }}
 		
 		private void OnPostprocessModel(GameObject model)
 		{
-			Debug.Log(model.GetComponentsInChildren<Renderer>()[0].sharedMaterials[0].name);
+			if (SkinImportAfterReimport)
+			{
+				SkinImportAfterReimport = false;
+				return;
+			}
 			var modelImportData = ModelImportDataHelper.LoadModeImportData(assetPath);
 			if (modelImportData != null)
 			{
@@ -30,9 +35,8 @@ namespace ModelImporter.Editor
 			if (ModelImportDataHelper.CheckModeImportDataForFull(mid, ModelImporter))
 			{
 				ModelImportDataHelper.SetModelImporterImportSettings(ModelImporter, mid);
-				return;
 			}
-			ModelImportDataHelper.FillModelImportDataSettings(ModelImporter, mid);
+			else ModelImportDataHelper.FillModelImportDataSettings(ModelImporter, mid);
 			var window = Dialog.ShowDialog<ModelImportDialogWindow>("Model importer", DialogType.Yes);
 			window.Initialize(ModelImporter, mid);
 			window.Yes += OnModelImporteDialogWindowYes;
@@ -42,7 +46,8 @@ namespace ModelImporter.Editor
 		{
 			EditorUtility.SetDirty(sender.ModelImportData);
 			ModelImportDataHelper.SetModelImporterImportSettings(sender.ModelImporter, sender.ModelImportData);
-			sender.ModelImporter.SaveAndReimport();
+			SkinImportAfterReimport = true;
+			AssetDatabase.ImportAsset(sender.ModelImporter.assetPath, ImportAssetOptions.ForceUpdate);
 		}
 	}
 }

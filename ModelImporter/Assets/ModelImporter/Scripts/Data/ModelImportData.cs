@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
+using UnityEditor.Experimental.UIElements;
 using UnityEngine;
 
 namespace ModelImporter.Data
@@ -14,10 +16,53 @@ namespace ModelImporter.Data
 			public bool LoopPose;
 		}
 
+		[SerializeField] private ModelImporterNormals _normals = ModelImporterNormals.Calculate;
+		[SerializeField] private ModelImporterNormalCalculationMode _normalsMode;
+		[SerializeField] private float _smoothingAngle = 180;
 		[SerializeField] private List<AnimationData> _animationsData;
+		[SerializeField] private bool _importMaterials = true;
+		[SerializeField] private ModelImporterMaterialLocation _materialsLocation = ModelImporterMaterialLocation.External;
+		[SerializeField] private ModelImporterMaterialName _materialsNaming = ModelImporterMaterialName.BasedOnMaterialName;
+		[SerializeField] private ModelImporterMaterialSearch _materialsSearch = ModelImporterMaterialSearch.Local;
 
 		public int AnimationsNumber { get { return _animationsData.Count; } }
 		public List<AnimationData> AnimationsData{get { return _animationsData; }}
+		public ModelImporterNormals Normals
+		{
+			get { return _normals; }
+			set { _normals = value; }
+		}
+		public ModelImporterNormalCalculationMode NormalsMode
+		{
+			get { return _normalsMode; }
+			set { _normalsMode = value; }
+		}
+		public float SmoothingAngle
+		{
+			get { return _smoothingAngle; }
+			set { _smoothingAngle = value; }
+		}
+
+		public bool ImportMaterials
+		{
+			get { return _importMaterials; }
+			set { _importMaterials = value; }
+		}
+		public ModelImporterMaterialLocation MaterialLocation
+		{
+			get { return _materialsLocation; }
+			set { _materialsLocation = value; }
+		}
+		public ModelImporterMaterialName MaterialsNaming
+		{
+			get { return _materialsNaming; }
+			set { _materialsNaming = value; }
+		}
+		public ModelImporterMaterialSearch MaterialsSearch
+		{
+			get { return _materialsSearch; }
+			set { _materialsSearch = value; }
+		}
 		
 		public void Initialize()
 		{

@@ -47,6 +47,8 @@ namespace ModelImporter.Editor.Helper
 		public static void SetModelImporterImportSettings(UnityEditor.ModelImporter modelImporter, ModelImportData mid)
 		{
 			modelImporter.clipAnimations = GetImportedAnimationClips(modelImporter.defaultClipAnimations, mid);
+			SetModelSettings(modelImporter, mid);
+			SetMaterialsSettings(modelImporter, mid);
 		}
 		
 		private static ModelImporterClipAnimation[] GetImportedAnimationClips(ModelImporterClipAnimation[] animations, 
@@ -66,6 +68,21 @@ namespace ModelImporter.Editor.Helper
 			var fileName = Path.GetFileNameWithoutExtension(assetPath);
 			var directory = Path.GetDirectoryName(assetPath);
 			return string.Format("{0}/{1}{2}.asset", directory, fileName, PostFix);
+		}
+
+		private static void SetModelSettings(UnityEditor.ModelImporter modelImporter, ModelImportData mid)
+		{
+			modelImporter.importNormals = mid.Normals;
+			modelImporter.normalCalculationMode = mid.NormalsMode;
+			modelImporter.normalSmoothingAngle = mid.SmoothingAngle;
+		}
+
+		private static void SetMaterialsSettings(UnityEditor.ModelImporter modelImporter, ModelImportData mid)
+		{
+			modelImporter.importMaterials = mid.ImportMaterials;
+			modelImporter.materialLocation = mid.MaterialLocation;
+			modelImporter.materialName = mid.MaterialsNaming;
+			modelImporter.materialSearch = mid.MaterialsSearch;
 		}
 	}
 }
