@@ -14,6 +14,7 @@ namespace ModelImporter.Editor
 		
 		private void OnPostprocessModel(GameObject model)
 		{
+			Debug.Log(model.GetComponentsInChildren<Renderer>()[0].sharedMaterials[0].name);
 			var modelImportData = ModelImportDataHelper.LoadModeImportData(assetPath);
 			if (modelImportData != null)
 			{

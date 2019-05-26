@@ -11,10 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8453346984b4f09a4a329effca8eb21, type: 3}
   m_Name: conditionerMID
   m_EditorClassIdentifier: 
-  _animationsData:
-  - Name: activation
-    LoopTime: 1
-    LoopPose: 1
-  - Name: idle
-    LoopTime: 1
-    LoopPose: 1
+  _animationsData: []
