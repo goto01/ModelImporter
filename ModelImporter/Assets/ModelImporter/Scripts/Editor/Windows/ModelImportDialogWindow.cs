@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace ModelImporter.Editor.Windows
 {
-	public class ModelImportDialogWindow : BaseDialogWindow<ModelImportDialogWindow>
+	public class ModelImportDialogWindow : ModelImporterBaseDialogWindow<ModelImportDialogWindow>
 	{
 		private enum Tab
 		{
@@ -23,6 +23,7 @@ namespace ModelImporter.Editor.Windows
 		private Vector2 _scroll;
 		private Tab _currentTab;
 		
+		protected override string WindowTitle { get { return string.Format("Model Import Data(MID) - {0}", _modelImportData.name); } }
 		public UnityEditor.ModelImporter ModelImporter { get { return _modelImporter; } }
 		public ModelImportData ModelImportData{get { return _modelImportData; }}
 
@@ -35,6 +36,7 @@ namespace ModelImporter.Editor.Windows
 		protected override void DrawContentEditor()
 		{
 			_size = new Vector2(Width, Height);
+			base.DrawContentEditor();
 			UpdatePosition();
 			_centerInParentWindow = false;
 			DrawHeader();
@@ -43,16 +45,11 @@ namespace ModelImporter.Editor.Windows
 
 		private void DrawHeader()
 		{
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField(string.Format("Model Import Data(MID) - {0}", _modelImportData.name),
-				EditorStyles.boldLabel, GUILayout.Width(Width - 140));
-			LanguageSelector();
-			EditorGUILayout.EndHorizontal();
 			EditorGUILayout.HelpBox(TextResourcesHelper.ModelImportDataDialogWindow.NewMidMessage, 
 				MessageType.Info);
 			DrawTabsEditor();
 		}
-
+		
 		private void DrawTabsEditor()
 		{
 			EditorGUILayout.BeginHorizontal();
@@ -67,19 +64,7 @@ namespace ModelImporter.Editor.Windows
 				_currentTab = Tab.Materials;
 			EditorGUILayout.EndHorizontal();
 		}
-
-		private void LanguageSelector()
-		{
-			var currentLanguage = TextResourcesHelper.CurrentLanguage;
-			GUILayout.FlexibleSpace();
-			if (GUILayout.Toggle(currentLanguage == TextResourcesHelper.Language.English, 
-				"English", EditorStyles.miniButtonLeft, GUILayout.Width(60))) 
-				currentLanguage = TextResourcesHelper.Language.English;
-			if (GUILayout.Toggle(currentLanguage == TextResourcesHelper.Language.Russian, 
-				"Русский", EditorStyles.miniButtonRight, GUILayout.Width(60))) 
-				currentLanguage = TextResourcesHelper.Language.Russian;
-			TextResourcesHelper.CurrentLanguage = currentLanguage;
-		}
+		
 
 		private void DrawSelectedTab()
 		{
@@ -109,7 +94,7 @@ namespace ModelImporter.Editor.Windows
 			var animations = _modelImportData.AnimationsData;
 			for (var index = 0; index < animations.Count; index++)
 			{
-				EditorGUILayout.BeginHorizontal("box");
+				EditorGUILayout.BeginHorizontal(GUI.skin.box);
 				DrawAnimationEditor(animations[index], index);
 				EditorGUILayout.EndHorizontal();
 			}

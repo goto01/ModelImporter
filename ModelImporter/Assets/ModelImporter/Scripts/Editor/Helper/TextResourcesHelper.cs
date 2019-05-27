@@ -78,5 +78,16 @@ namespace ModelImporter.Editor.Helper
 			public static string MaterialsMessage{get { return _materialsMessage[CurrentLanguage]; }}
 		}
 		 
+		public class AnimatorGeneratorDialogWIndow
+		{
+			private static Dictionary<Language, string> _animatorGeneratorMessage = 
+				new Dictionary<Language, string>()
+				{
+					{Language.English, "Selected animations will be overriden or created in AnimatorController in current folder"},
+					{Language.Russian, "Выбранные анимации будут перезаписаны или созданны в AnimatorController в текущей дериктории"},
+				};
+			
+			public static string AnimatorGeneratorMessage { get { return _animatorGeneratorMessage[CurrentLanguage]; } }
+		} 
 	}
 }

@@ -10,14 +10,14 @@ namespace ModelImporter.Editor
 {
 	public class ModelImportPostProcessor : AssetPostprocessor
 	{
-		private static bool SkinImportAfterReimport = false;
+		private static bool _skipImportAfterReimport = false;
 		private UnityEditor.ModelImporter ModelImporter{get { return (UnityEditor.ModelImporter) assetImporter; }}
 		
 		private void OnPostprocessModel(GameObject model)
 		{
-			if (SkinImportAfterReimport)
+			if (_skipImportAfterReimport)
 			{
-				SkinImportAfterReimport = false;
+				_skipImportAfterReimport = false;
 				return;
 			}
 			var modelImportData = ModelImportDataHelper.LoadModeImportData(assetPath);
@@ -46,8 +46,23 @@ namespace ModelImporter.Editor
 		{
 			EditorUtility.SetDirty(sender.ModelImportData);
 			ModelImportDataHelper.SetModelImporterImportSettings(sender.ModelImporter, sender.ModelImportData);
-			SkinImportAfterReimport = true;
+			_skipImportAfterReimport = true;
 			AssetDatabase.ImportAsset(sender.ModelImporter.assetPath, ImportAssetOptions.ForceUpdate);
+			GenerateAnimatorIfRequired(sender.ModelImporter, sender.ModelImportData);
+		}
+
+		private void GenerateAnimatorIfRequired(UnityEditor.ModelImporter modelImporter, ModelImportData mid)
+		{
+			if (mid.AnimationsNumber == 0) return;
+			var animatorGeneratorWindow = Dialog.ShowDialog<AnimatorGeneratorDialogWindow>("Animator generator", DialogType.YesNo);
+			animatorGeneratorWindow.Initialize(modelImporter.assetPath);
+			animatorGeneratorWindow.Yes += AnimatorGeneratorWindowOnYes;
+		}
+
+		private void AnimatorGeneratorWindowOnYes(AnimatorGeneratorDialogWindow sender)
+		{
+			var animatorController = AnimatorHelper.GetAnimatorController(sender.Path);
+			AnimatorHelper.ReplaceAnimator(animatorController, sender.Animations);
 		}
 	}
 }

@@ -17,10 +17,10 @@ MonoBehaviour:
   _animationsData:
   - Name: activation
     LoopTime: 1
-    LoopPose: 1
+    LoopPose: 0
   - Name: idle
     LoopTime: 1
-    LoopPose: 1
+    LoopPose: 0
   _importMaterials: 1
   _materialsLocation: 0
   _materialsNaming: 1

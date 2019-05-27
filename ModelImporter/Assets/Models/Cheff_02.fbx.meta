@@ -219,12 +219,37 @@ ModelImporter:
     7400034: idle_meat_02_Take_001
     9500000: //RootNode
     13700000: body
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: boby
+    second: {fileID: 2100000, guid: eb7cdd662bf0824429c763fa80952f61, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: knife1
+    second: {fileID: 2100000, guid: ab9fae807e7287f4f80d83a371bb4acb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: paeked_cap1
+    second: {fileID: 2100000, guid: e019ef43cebfed944b6fe2034f371011, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pult2
+    second: {fileID: 2100000, guid: ecac0c4acdb54af4aaf3c43c3507fb68, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tray2
+    second: {fileID: 2100000, guid: 4cd3addff3d1b764ba59f3c45e167c9a, type: 2}
   materials:
     importMaterials: 1
-    materialName: 0
-    materialSearch: 1
-    materialLocation: 1
+    materialName: 1
+    materialSearch: 0
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -622,7 +647,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -650,7 +675,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0

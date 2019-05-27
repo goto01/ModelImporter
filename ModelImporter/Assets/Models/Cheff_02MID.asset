@@ -55,10 +55,10 @@ MonoBehaviour:
     LoopTime: 0
     LoopPose: 0
   - Name: taking_damage_222_Take_001
-    LoopTime: 0
+    LoopTime: 1
     LoopPose: 0
   - Name: idle_podnos_333_Take_001
-    LoopTime: 0
+    LoopTime: 1
     LoopPose: 0
   - Name: run_meat_Take_001
     LoopTime: 0
