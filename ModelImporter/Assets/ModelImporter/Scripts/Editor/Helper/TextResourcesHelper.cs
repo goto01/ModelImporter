@@ -88,6 +88,18 @@ namespace ModelImporter.Editor.Helper
 				};
 			
 			public static string AnimatorGeneratorMessage { get { return _animatorGeneratorMessage[CurrentLanguage]; } }
-		} 
+		}
+
+		public class Preferences
+		{
+			private static Dictionary<Language, string> _activeLabel = 
+				new Dictionary<Language, string>()
+				{
+					{Language.English, "Model Importer active"},
+					{Language.Russian, "Model Importer включён"},
+				};
+			
+			public static string ActiveLabel { get { return _activeLabel[CurrentLanguage]; } }
+		}
 	}
 }

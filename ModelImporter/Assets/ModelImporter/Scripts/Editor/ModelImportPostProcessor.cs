@@ -15,6 +15,7 @@ namespace ModelImporter.Editor
 		
 		private void OnPostprocessModel(GameObject model)
 		{
+			if (!PrefsHelper.ModeImporterActive) return;
 			if (_skipImportAfterReimport)
 			{
 				_skipImportAfterReimport = false;
