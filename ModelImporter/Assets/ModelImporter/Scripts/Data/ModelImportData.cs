@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.Experimental.UIElements;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace ModelImporter.Data
 {
@@ -16,6 +17,7 @@ namespace ModelImporter.Data
 			public bool LoopPose;
 		}
 
+#if UNITY_EDITOR		
 		[SerializeField] private ModelImporterNormals _normals = ModelImporterNormals.Calculate;
 		[SerializeField] private ModelImporterNormalCalculationMode _normalsMode;
 		[SerializeField] private float _smoothingAngle = 180;
@@ -93,5 +95,6 @@ namespace ModelImporter.Data
 					return true;
 			return false;
 		}
+#endif		
 	}
 }
