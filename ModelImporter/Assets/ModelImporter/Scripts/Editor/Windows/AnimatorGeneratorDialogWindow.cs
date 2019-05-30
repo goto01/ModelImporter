@@ -20,11 +20,13 @@ namespace ModelImporter.Editor.Windows
 		private const int Height = 400;
 		private string _path;
 		private List<AnimationView> _animations;
-		private Vector2 _scroll;
+		private Vector2 _scroll ;
+		private bool _setAnimatorControllerInModel = true;
 
 		protected override string WindowTitle { get { return System.IO.Path.GetFileName(_path); } }
 		public List<AnimationView> Animations { get { return _animations; } }
 		public string Path { get { return _path; } }
+		public bool SetAnimatorControllerInModel { get { return _setAnimatorControllerInModel; } }
 
 		public void Initialize(string assetPath)
 		{
@@ -70,6 +72,7 @@ namespace ModelImporter.Editor.Windows
 		{
 			EditorGUILayout.Space();
 			DrawAnimationGenerationMessage();
+			_setAnimatorControllerInModel = EditorGUILayout.Toggle("Set animator to model", _setAnimatorControllerInModel);
 			EditorGUILayout.BeginVertical(GUI.skin.box);
 			EditorGUILayout.LabelField(TextResourcesHelper.ModelImportDataDialogWindow.AnimationsLabel);
 			_scroll = EditorGUILayout.BeginScrollView(_scroll);

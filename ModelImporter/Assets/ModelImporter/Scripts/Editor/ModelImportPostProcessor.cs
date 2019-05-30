@@ -4,21 +4,35 @@ using ModelImporter.Data;
 using ModelImporter.Editor.Helper;
 using ModelImporter.Editor.Windows;
 using UnityEditor;
+using UnityEditor.Animations;
 using UnityEngine;
 
 namespace ModelImporter.Editor
 {
 	public class ModelImportPostProcessor : AssetPostprocessor
 	{
-		private static bool _skipImportAfterReimport = false;
+		private const int DefaultImport = 0;
+		private const int SkipImportAfterReimportState = 1;
+		private const int SetAnimatorState = 2;
+
+		private static int _state;
+		private static AnimatorController _animatorController;
+		
 		private UnityEditor.ModelImporter ModelImporter{get { return (UnityEditor.ModelImporter) assetImporter; }}
 		
 		private void OnPostprocessModel(GameObject model)
 		{
 			if (!PrefsHelper.ModeImporterActive) return;
-			if (_skipImportAfterReimport)
+			if (_state == SkipImportAfterReimportState)
 			{
-				_skipImportAfterReimport = false;
+				_state = DefaultImport;
+				return;
+			}
+
+			if (_state == SetAnimatorState)
+			{
+				_state = DefaultImport;
+				SetAnimatorControllerToModel(model, _animatorController);
 				return;
 			}
 			var modelImportData = ModelImportDataHelper.LoadModeImportData(assetPath);
@@ -47,7 +61,7 @@ namespace ModelImporter.Editor
 		{
 			EditorUtility.SetDirty(sender.ModelImportData);
 			ModelImportDataHelper.SetModelImporterImportSettings(sender.ModelImporter, sender.ModelImportData);
-			_skipImportAfterReimport = true;
+			_state = SetAnimatorState;
 			AssetDatabase.ImportAsset(sender.ModelImporter.assetPath, ImportAssetOptions.ForceUpdate);
 			GenerateAnimatorIfRequired(sender.ModelImporter, sender.ModelImportData);
 		}
@@ -64,6 +78,19 @@ namespace ModelImporter.Editor
 		{
 			var animatorController = AnimatorHelper.GetAnimatorController(sender.Path);
 			AnimatorHelper.ReplaceAnimator(animatorController, sender.Animations);
+			if (sender.SetAnimatorControllerInModel)
+			{
+				_state = SetAnimatorState;
+				_animatorController = animatorController;
+				AssetDatabase.ImportAsset(sender.Path, ImportAssetOptions.ForceUpdate);
+			}
+		}
+
+		private void SetAnimatorControllerToModel(GameObject gameObject, AnimatorController animatorController)
+		{
+			ModelImportDataHelper.SetAnimatorControllerToModel(gameObject,
+				animatorController);
+			EditorUtility.SetDirty(gameObject);
 		}
 	}
 }

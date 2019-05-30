@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using ModelImporter.Data;
 using UnityEditor;
+using UnityEditor.Animations;
 using UnityEngine;
 
 namespace ModelImporter.Editor.Helper
@@ -49,6 +50,11 @@ namespace ModelImporter.Editor.Helper
 			modelImporter.clipAnimations = GetImportedAnimationClips(modelImporter.defaultClipAnimations, mid);
 			SetModelSettings(modelImporter, mid);
 			SetMaterialsSettings(modelImporter, mid);
+		}
+
+		public static void SetAnimatorControllerToModel(GameObject model, AnimatorController animator)
+		{
+			model.GetComponent<Animator>().runtimeAnimatorController = animator;
 		}
 		
 		private static ModelImporterClipAnimation[] GetImportedAnimationClips(ModelImporterClipAnimation[] animations, 
