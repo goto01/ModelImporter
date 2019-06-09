@@ -1,7 +1,7 @@
 ﻿using System;
 using Editor.Windows.DialogWindows;
 using ModelImporter.Data;
-using ModelImporter.Editor.Helper;
+using ModelImporter.Editor.Helper.Animator;
 using ModelImporter.Editor.Windows;
 using UnityEditor;
 using UnityEditor.Animations;
@@ -16,7 +16,7 @@ namespace ModelImporter.Editor
 		private const int SetAnimatorState = 2;
 
 		private static int _state;
-		private static AnimatorController _animatorController;
+		private static AnimatorDescription _animatorController;
 		
 		private UnityEditor.ModelImporter ModelImporter{get { return (UnityEditor.ModelImporter) assetImporter; }}
 		
@@ -32,7 +32,7 @@ namespace ModelImporter.Editor
 			if (_state == SetAnimatorState)
 			{
 				_state = DefaultImport;
-				SetAnimatorControllerToModel(model, _animatorController);
+				SetAnimatorControllerToModel(model, _animatorController.Animator);
 				return;
 			}
 			var modelImportData = ModelImportDataHelper.LoadModeImportData(assetPath);
@@ -61,7 +61,7 @@ namespace ModelImporter.Editor
 		{
 			EditorUtility.SetDirty(sender.ModelImportData);
 			ModelImportDataHelper.SetModelImporterImportSettings(sender.ModelImporter, sender.ModelImportData);
-			_state = SetAnimatorState;
+			_state = SkipImportAfterReimportState;
 			AssetDatabase.ImportAsset(sender.ModelImporter.assetPath, ImportAssetOptions.ForceUpdate);
 			GenerateAnimatorIfRequired(sender.ModelImporter, sender.ModelImportData);
 		}
@@ -86,7 +86,7 @@ namespace ModelImporter.Editor
 			}
 		}
 
-		private void SetAnimatorControllerToModel(GameObject gameObject, AnimatorController animatorController)
+		private void SetAnimatorControllerToModel(GameObject gameObject, RuntimeAnimatorController animatorController)
 		{
 			ModelImportDataHelper.SetAnimatorControllerToModel(gameObject,
 				animatorController);

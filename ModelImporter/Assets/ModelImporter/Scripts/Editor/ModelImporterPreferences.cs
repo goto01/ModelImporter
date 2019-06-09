@@ -1,4 +1,4 @@
-using ModelImporter.Editor.Helper;
+using ModelImporter.Editor.Helper.Animator;
 using UnityEditor;
 using UnityEngine;
 

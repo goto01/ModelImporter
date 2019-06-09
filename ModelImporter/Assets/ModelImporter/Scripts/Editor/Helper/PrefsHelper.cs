@@ -1,6 +1,6 @@
 using UnityEditor;
 
-namespace ModelImporter.Editor.Helper
+namespace ModelImporter.Editor.Helper.Animator
 {
 	public static class PrefsHelper
 	{

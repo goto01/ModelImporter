@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 
-namespace ModelImporter.Editor.Helper
+namespace ModelImporter.Editor.Helper.Animator
 {
 	public static class ModelImportDataHelper
 	{
@@ -52,9 +52,9 @@ namespace ModelImporter.Editor.Helper
 			SetMaterialsSettings(modelImporter, mid);
 		}
 
-		public static void SetAnimatorControllerToModel(GameObject model, AnimatorController animator)
+		public static void SetAnimatorControllerToModel(GameObject model, RuntimeAnimatorController animator)
 		{
-			model.GetComponent<Animator>().runtimeAnimatorController = animator;
+			model.GetComponent<UnityEngine.Animator>().runtimeAnimatorController = animator;
 		}
 		
 		private static ModelImporterClipAnimation[] GetImportedAnimationClips(ModelImporterClipAnimation[] animations, 

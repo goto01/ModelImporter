@@ -1,7 +1,7 @@
 using Editor.Windows.DialogWindows;
 using ModelImporter.Data;
 using ModelImporter.Editor.Editors.ModeImportData;
-using ModelImporter.Editor.Helper;
+using ModelImporter.Editor.Helper.Animator;
 using UnityEditor;
 using UnityEngine;
 
