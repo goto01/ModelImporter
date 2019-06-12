@@ -19,9 +19,11 @@ namespace ModelImporter.Editor.Windows
 		protected override string WindowTitle { get { return string.Format("Model Import Data(MID) - {0}", _modelImportData.name); } }
 		public UnityEditor.ModelImporter ModelImporter { get { return _modelImporter; } }
 		public ModelImportData ModelImportData{get { return _modelImportData; }}
+		public string ModelPath { get; private set; }
 
-		public void Initialize(UnityEditor.ModelImporter modelImporter, ModelImportData mid)
+		public void Initialize(UnityEditor.ModelImporter modelImporter, ModelImportData mid, string modelPath)
 		{
+			ModelPath = modelPath;
 			_modelImporter = modelImporter;
 			_modelImportData = mid;
 		}

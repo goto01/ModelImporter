@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _normals: 1
   _normalsMode: 0
-  _smoothingAngle: 103
+  _smoothingAngle: 180
   _animationsData:
   - Name: activation
     LoopTime: 0

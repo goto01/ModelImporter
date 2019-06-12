@@ -1,6 +1,7 @@
 ﻿using System;
 using Editor.Windows.DialogWindows;
 using ModelImporter.Data;
+using ModelImporter.Editor.Helper;
 using ModelImporter.Editor.Helper.Animator;
 using ModelImporter.Editor.Windows;
 using UnityEditor;
@@ -42,14 +43,15 @@ namespace ModelImporter.Editor
 			var modelImportData = ModelImportDataHelper.LoadModeImportData(assetPath);
 			if (modelImportData != null)
 			{
-				HandleModelImportData(modelImportData);
+				HandleModelImportData(modelImportData, assetPath);
 				return;
 			}
 			var mid = ModelImportDataHelper.CreateModelImportData(assetPath);
-			HandleModelImportData(mid);
+			HandleModelImportData(mid, assetPath);
+			
 		}
 
-		private void HandleModelImportData(ModelImportData mid)
+		private void HandleModelImportData(ModelImportData mid, string modelPath)
 		{
 			if (ModelImportDataHelper.CheckModeImportDataForFull(mid, ModelImporter))
 			{
@@ -57,7 +59,7 @@ namespace ModelImporter.Editor
 			}
 			else ModelImportDataHelper.FillModelImportDataSettings(ModelImporter, mid);
 			var window = Dialog.ShowDialog<ModelImportDialogWindow>("Model importer", DialogType.Yes);
-			window.Initialize(ModelImporter, mid);
+			window.Initialize(ModelImporter, mid, modelPath);
 			window.Yes += OnModelImporteDialogWindowYes;
 		}
 
@@ -66,6 +68,7 @@ namespace ModelImporter.Editor
 			EditorUtility.SetDirty(sender.ModelImportData);
 			ModelImportDataHelper.SetModelImporterImportSettings(sender.ModelImporter, sender.ModelImportData);
 			_state = SkipImportAfterReimportState;
+			PrefabHelper.CreateOrReplacePrefab(sender.ModelPath);
 			AssetDatabase.ImportAsset(sender.ModelImporter.assetPath, ImportAssetOptions.ForceUpdate);
 			GenerateAnimatorIfRequired(sender.ModelImporter, sender.ModelImportData);
 		}
