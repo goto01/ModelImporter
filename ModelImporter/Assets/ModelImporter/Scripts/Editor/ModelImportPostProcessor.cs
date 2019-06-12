@@ -28,11 +28,15 @@ namespace ModelImporter.Editor
 				_state = DefaultImport;
 				return;
 			}
-
 			if (_state == SetAnimatorState)
 			{
 				_state = DefaultImport;
 				SetAnimatorControllerToModel(model, _animatorController.Animator);
+				return;
+			}
+			if (!ModelImportDataHelper.CheckGameObjectForScale(model))
+			{
+				Dialog.ShowDialog<YesNoDialogWindow>("Scale error", DialogType.Yes).Message = "Scale error";
 				return;
 			}
 			var modelImportData = ModelImportDataHelper.LoadModeImportData(assetPath);

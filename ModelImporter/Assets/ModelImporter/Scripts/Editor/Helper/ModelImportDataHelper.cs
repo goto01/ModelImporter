@@ -8,7 +8,30 @@ namespace ModelImporter.Editor.Helper.Animator
 {
 	public static class ModelImportDataHelper
 	{
+		private const int MaxDepth = 1000;
 		private const string PostFix = "MID";
+
+#region Check for scale		
+		
+		public static bool CheckGameObjectForScale(GameObject gameObject)
+		{
+			return CheckChildTransforms(gameObject.transform, 0);
+		}
+
+		private static bool CheckChildTransforms(Transform transform, int depth)
+		{
+			if (depth > MaxDepth)
+			{
+				Debug.LogError("Infinite rec or rec depth limit exceeds");
+				return false;
+			}
+			if (Vector3.Distance(Vector3.one, transform.localScale) > Mathf.Epsilon) return false;
+			for (var index = 0; index < transform.childCount; index++)
+				if (!CheckChildTransforms(transform.GetChild(index), depth + 1)) return false;
+			return true;
+		}
+		
+#endregion		
 		
 		public static ModelImportData LoadModeImportData(string assetPath)
 		{

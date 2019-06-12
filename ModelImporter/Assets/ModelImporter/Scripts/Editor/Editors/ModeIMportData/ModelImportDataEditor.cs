@@ -11,7 +11,8 @@ namespace ModelImporter.Editor.Editors.ModeImportData
 		{
 			Model,
 			Animations,
-			Materials
+			Materials,
+			Scale,
 		}
 		
 		public static void Draw(ModelImportData mid, ref Tab tab, ref Vector2 scroll)
