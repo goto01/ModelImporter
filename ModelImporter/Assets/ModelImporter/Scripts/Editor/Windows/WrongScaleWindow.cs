@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using ModelImporter.Editor.Helper.Animator;
 using UnityEditor;
 using UnityEngine;
@@ -21,7 +20,6 @@ namespace ModelImporter.Editor.Windows
 		private Vector2 _scrollRect;
 		
 		protected override string WindowTitle { get { return "Wrong scale window"; } }
-		public string AssetPath { private set; get; }
 
 		protected override void DrawContentEditor()
 		{
@@ -41,7 +39,6 @@ namespace ModelImporter.Editor.Windows
 					Name = gameObjectsWithWrongScale[index].name,
 					Scale = gameObjectsWithWrongScale[index].transform.lossyScale,
 				});
-			AssetPath = assetPath;
 		}
 
 		private void DrawEditor()
