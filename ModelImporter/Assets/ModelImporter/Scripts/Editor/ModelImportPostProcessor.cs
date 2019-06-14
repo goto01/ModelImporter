@@ -35,9 +35,11 @@ namespace ModelImporter.Editor
 				SetAnimatorControllerToModel(model, _animatorController.Animator);
 				return;
 			}
-			if (!ModelImportDataHelper.CheckGameObjectForScale(model))
+			var gameObjectsWithWrongScale = ModelImportDataHelper.GetGameObjectsWithWrongScale(model);
+			if (gameObjectsWithWrongScale.Count > 0)
 			{
-				Dialog.ShowDialog<YesNoDialogWindow>("Scale error", DialogType.Yes).Message = "Scale error";
+				var wrongScaleWindow = Dialog.ShowDialog<WrongScaleWindow>("Wrong scale", DialogType.Yes);
+				wrongScaleWindow.Initialize(gameObjectsWithWrongScale, assetPath);
 				return;
 			}
 			var modelImportData = ModelImportDataHelper.LoadModeImportData(assetPath);

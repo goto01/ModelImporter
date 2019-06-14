@@ -101,5 +101,17 @@ namespace ModelImporter.Editor.Helper.Animator
 			
 			public static string ActiveLabel { get { return _activeLabel[CurrentLanguage]; } }
 		}
+
+		public class WrongScaleWindow
+		{
+			private static Dictionary<Language, string> _helpBoxMessage =
+				new Dictionary<Language, string>()
+				{
+					{Language.Russian, "В модели имеются объекты, которые имеют скейл отличный от (1, 1, 1). Импортирование будет отменено."},
+					{Language.English, "Model contains some objects wich have scale isn't equal to (1, 1, 1). Importing will be canceled."},
+				};
+			
+			public static string HelpBoxMessage{get { return _helpBoxMessage[CurrentLanguage]; }}
+		}
 	}
 }

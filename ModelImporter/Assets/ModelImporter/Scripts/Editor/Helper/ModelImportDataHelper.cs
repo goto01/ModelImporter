@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using ModelImporter.Data;
 using UnityEditor;
 using UnityEditor.Animations;
@@ -13,22 +14,27 @@ namespace ModelImporter.Editor.Helper.Animator
 
 #region Check for scale		
 		
-		public static bool CheckGameObjectForScale(GameObject gameObject)
+		public static List<GameObject> GetGameObjectsWithWrongScale(GameObject gameObject)
 		{
-			return CheckChildTransforms(gameObject.transform, 0);
+			var gameObjects = new List<GameObject>();  
+			CheckChildTransforms(gameObject.transform, gameObjects, 0);
+			return gameObjects;
 		}
 
-		private static bool CheckChildTransforms(Transform transform, int depth)
+		private static void CheckChildTransforms(Transform transform, List<GameObject> gameObjects, int depth)
 		{
 			if (depth > MaxDepth)
 			{
 				Debug.LogError("Infinite rec or rec depth limit exceeds");
-				return false;
+				return;
 			}
-			if (Vector3.Distance(Vector3.one, transform.localScale) > Mathf.Epsilon) return false;
+			if (Vector3.Distance(Vector3.one, transform.localScale) > Mathf.Epsilon)
+			{
+				gameObjects.Add(transform.gameObject);
+				return;
+			}
 			for (var index = 0; index < transform.childCount; index++)
-				if (!CheckChildTransforms(transform.GetChild(index), depth + 1)) return false;
-			return true;
+				CheckChildTransforms(transform.GetChild(index), gameObjects, depth + 1);
 		}
 		
 #endregion		
