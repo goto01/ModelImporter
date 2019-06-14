@@ -32,7 +32,7 @@ namespace ModelImporter.Editor
 			if (_state == SetAnimatorState)
 			{
 				_state = DefaultImport;
-				SetAnimatorControllerToModel(model, _animatorController.Animator);
+				SetAnimatorControllerToModel(assetPath, _animatorController.Animator);
 				return;
 			}
 			var gameObjectsWithWrongScale = ModelImportDataHelper.GetGameObjectsWithWrongScale(model);
@@ -95,11 +95,10 @@ namespace ModelImporter.Editor
 			}
 		}
 
-		private void SetAnimatorControllerToModel(GameObject gameObject, RuntimeAnimatorController animatorController)
+		private void SetAnimatorControllerToModel(string modelPath, RuntimeAnimatorController animatorController)
 		{
-			ModelImportDataHelper.SetAnimatorControllerToModel(gameObject,
+			PrefabHelper.SetAnimatorControllerToPrefab(modelPath,
 				animatorController);
-			EditorUtility.SetDirty(gameObject);
 		}
 	}
 }

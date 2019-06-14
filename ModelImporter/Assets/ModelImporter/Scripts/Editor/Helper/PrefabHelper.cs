@@ -15,6 +15,14 @@ namespace ModelImporter.Editor.Helper
 			else prefab = CreatePrefab(model, prefabPath);
 			return prefab;
 		}
+		
+		public static void SetAnimatorControllerToPrefab(string modelPath, RuntimeAnimatorController animator)
+		{
+			var prefabPath = GetPrefabPath(modelPath);
+			var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+			prefab.GetComponent<UnityEngine.Animator>().runtimeAnimatorController = animator;
+			EditorUtility.SetDirty(prefab);
+		}
 
 		private static string GetPrefabPath(string modelPath)
 		{

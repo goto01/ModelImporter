@@ -80,11 +80,6 @@ namespace ModelImporter.Editor.Helper.Animator
 			SetModelSettings(modelImporter, mid);
 			SetMaterialsSettings(modelImporter, mid);
 		}
-
-		public static void SetAnimatorControllerToModel(GameObject model, RuntimeAnimatorController animator)
-		{
-			model.GetComponent<UnityEngine.Animator>().runtimeAnimatorController = animator;
-		}
 		
 		private static ModelImporterClipAnimation[] GetImportedAnimationClips(ModelImporterClipAnimation[] animations, 
 			ModelImportData modelImportData)
