@@ -70,8 +70,8 @@ namespace ModelImporter.Editor
 			EditorUtility.SetDirty(sender.ModelImportData);
 			ModelImportDataHelper.SetModelImporterImportSettings(sender.ModelImporter, sender.ModelImportData);
 			_state = SkipImportAfterReimportState;
-			PrefabHelper.CreateOrReplacePrefab(sender.ModelPath);
 			AssetDatabase.ImportAsset(sender.ModelImporter.assetPath, ImportAssetOptions.ForceUpdate);
+			PrefabHelper.CreateOrReplacePrefab(sender.ModelPath);
 			GenerateAnimatorIfRequired(sender.ModelImporter, sender.ModelImportData);
 		}
 
