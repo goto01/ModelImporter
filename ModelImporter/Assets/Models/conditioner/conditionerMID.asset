@@ -11,10 +11,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8453346984b4f09a4a329effca8eb21, type: 3}
   m_Name: conditionerMID
   m_EditorClassIdentifier: 
-  _normals: 1
+  _normals: 0
   _normalsMode: 0
   _smoothingAngle: 180
-  _animationsData: []
+  _animationsData:
+  - Name: activation
+    LoopTime: 1
+    LoopPose: 0
+    Default: 1
+  - Name: idle
+    LoopTime: 1
+    LoopPose: 0
+    Default: 0
   _importMaterials: 1
   _materialsLocation: 0
   _materialsNaming: 1

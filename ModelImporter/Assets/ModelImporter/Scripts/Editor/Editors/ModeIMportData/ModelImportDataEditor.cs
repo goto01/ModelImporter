@@ -67,10 +67,13 @@ namespace ModelImporter.Editor.Editors.ModeImportData
 			EditorGUILayout.LabelField(TextResourcesHelper.ModelImportDataDialogWindow.AnimationsLabel);
 			scroll = EditorGUILayout.BeginScrollView(scroll);
 			var animations = mid.AnimationsData;
+			var defaultRadioGroup = false;
 			for (var index = 0; index < animations.Count; index++)
 			{
 				EditorGUILayout.BeginHorizontal(GUI.skin.box);
 				DrawAnimationEditor(mid, animations[index], index);
+				if (animations[index].Default && !defaultRadioGroup) defaultRadioGroup = true;
+				else animations[index].Default = false;
 				EditorGUILayout.EndHorizontal();
 			}
 			EditorGUILayout.EndScrollView();
@@ -89,11 +92,14 @@ namespace ModelImporter.Editor.Editors.ModeImportData
 			ModelImportData.AnimationData animation)
 		{
 			var animationData = mid.GetAnimationData(animation.Name);
-			EditorGUILayout.LabelField("Loop time", GUILayout.Width(70));
+			EditorGUILayout.LabelField("Loop", EditorStyles.miniLabel, GUILayout.Width(25));
 			animation.LoopTime = animationData.LoopTime = EditorGUILayout.Toggle(animationData.LoopTime,
 				GUILayout.Width(16));
-			EditorGUILayout.LabelField("Loop blend", GUILayout.Width(70));
+			EditorGUILayout.LabelField("Loop blend", EditorStyles.miniLabel, GUILayout.Width(53));
 			animation.LoopPose = animationData.LoopPose = EditorGUILayout.Toggle(animationData.LoopPose,
+				GUILayout.Width(16));
+			EditorGUILayout.LabelField("Default", EditorStyles.miniLabel, GUILayout.Width(36));
+			animation.Default = animationData.Default = EditorGUILayout.Toggle(animationData.Default,
 				GUILayout.Width(16));
 		}
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ModelImporter.Data;
 using ModelImporter.Editor.Helper.Animator;
 using UnityEditor;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace ModelImporter.Editor.Windows
 			public AnimationClip Animation;
 			public AnimationClipSettings AnimationClipSettings;
 			public bool Checked;
+			public bool Default;
 		}
 
 		private const int Width = 500;
@@ -20,6 +22,7 @@ namespace ModelImporter.Editor.Windows
 		private List<AnimationView> _animations;
 		private Vector2 _scroll ;
 		private bool _setAnimatorControllerInModel = true;
+		private ModelImportData _mid;
 
 		protected override string WindowTitle { get { return System.IO.Path.GetFileName(_path); } }
 		public List<AnimationView> Animations { get { return _animations; } }
@@ -29,6 +32,7 @@ namespace ModelImporter.Editor.Windows
 		public void Initialize(string assetPath)
 		{
 			_path = assetPath;
+			_mid = ModelImportDataHelper.LoadModeImportData(assetPath);
 			_animations = LoadAnimations();
 		}
 		
@@ -54,7 +58,8 @@ namespace ModelImporter.Editor.Windows
 					{
 						Animation = animation,
 						AnimationClipSettings = AnimationUtility.GetAnimationClipSettings(animation),
-						Checked = this,
+						Checked = true,
+						Default = _mid.GetAnimationData(animation.name).Default,
 					});
 				}
 			}
@@ -92,16 +97,18 @@ namespace ModelImporter.Editor.Windows
 			EditorGUILayout.LabelField(animationView.Animation.name, GUILayout.Width(160));
 			GUILayout.FlexibleSpace();
 			if (GUILayout.Button("Ping", GUILayout.Width(50))) EditorGUIUtility.PingObject(_animations[index].Animation);
-			DrawAnimationSettingsEditor(animationView.AnimationClipSettings);
+			DrawAnimationSettingsEditor(animationView);
 		}
 
-		private void DrawAnimationSettingsEditor(AnimationClipSettings acs)
+		private void DrawAnimationSettingsEditor(AnimationView animationView)
 		{
 			GUI.enabled = false;
-			EditorGUILayout.LabelField("Loop time", GUILayout.Width(60));
-			EditorGUILayout.Toggle(acs.loopTime, GUILayout.Width(16));
-			EditorGUILayout.LabelField("Loop pose", GUILayout.Width(70));
-			EditorGUILayout.Toggle(acs.loopBlend, GUILayout.Width(16));
+			EditorGUILayout.LabelField("Loop", EditorStyles.miniLabel, GUILayout.Width(25));
+			EditorGUILayout.Toggle(animationView.AnimationClipSettings.loopTime, GUILayout.Width(16));
+			EditorGUILayout.LabelField("Loop blend", EditorStyles.miniLabel, GUILayout.Width(55));
+			EditorGUILayout.Toggle(animationView.AnimationClipSettings.loopBlend, GUILayout.Width(16));
+			EditorGUILayout.LabelField("Default", EditorStyles.miniLabel, GUILayout.Width(37));
+			EditorGUILayout.Toggle(animationView.Default, GUILayout.Width(16));
 			GUI.enabled = true;
 		}
 		

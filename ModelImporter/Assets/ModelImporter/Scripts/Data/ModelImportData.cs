@@ -15,6 +15,7 @@ namespace ModelImporter.Data
 			public string Name;
 			public bool LoopTime;
 			public bool LoopPose;
+			public bool Default;
 		}
 
 #if UNITY_EDITOR		

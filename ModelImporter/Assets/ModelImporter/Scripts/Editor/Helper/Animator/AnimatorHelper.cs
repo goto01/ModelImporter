@@ -24,7 +24,10 @@ namespace ModelImporter.Editor.Helper.Animator
 			List<AnimatorGeneratorDialogWindow.AnimationView> animations)
 		{
 			for (var index = 0; index < animations.Count; index++)
-				if (animations[index].Checked) animator.ReplaceAnimation(animations[index].Animation);
+			{
+				if (!animations[index].Checked) continue;
+				animator.ReplaceAnimation(animations[index].Animation, animations[index].Default);
+			}
 			animator.SetDirty();
 		}
 		

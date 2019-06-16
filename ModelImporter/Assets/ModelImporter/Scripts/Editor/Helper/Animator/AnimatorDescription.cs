@@ -33,12 +33,12 @@ namespace ModelImporter.Editor.Helper.Animator
 			_animatorOverrideController = animatorOverrideController;
 		}
 
-		public void ReplaceAnimation(AnimationClip animation)
+		public void ReplaceAnimation(AnimationClip animation, bool isDefault)
 		{
 			switch (Type)
 			{
 				case AnimatorType.Default:
-					ReplaceDefaultAnimation(animation);
+					ReplaceDefaultAnimation(animation, isDefault);
 					break;
 				case AnimatorType.Override:
 					ReplaceOverrideAnimation(animation);
@@ -59,19 +59,22 @@ namespace ModelImporter.Editor.Helper.Animator
 			}
 		}
 
-		private void ReplaceDefaultAnimation(AnimationClip animation)
+		private void ReplaceDefaultAnimation(AnimationClip animation, bool isDefault)
 		{
-			var states = _animatorController.layers[0].stateMachine.states;
+			var stateMachine = _animatorController.layers[0].stateMachine;
+			var states = stateMachine.states;
 			for (var index = 0; index < states.Length; index++)
 			{
 				if (states[index].state.name == animation.name)
 				{
 					states[index].state.motion = animation;
+					if (isDefault) stateMachine.defaultState = states[index].state;
 					return;
 				}
 			}
-			var state = _animatorController.layers[0].stateMachine.AddState(animation.name);
+			var state = stateMachine.AddState(animation.name);
 			state.motion = animation;
+			if (isDefault) stateMachine.defaultState = state;
 		}
 
 		private void ReplaceOverrideAnimation(AnimationClip animation)

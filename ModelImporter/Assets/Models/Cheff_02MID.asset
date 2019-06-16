@@ -18,57 +18,75 @@ MonoBehaviour:
   - Name: talk_01_Take_002
     LoopTime: 0
     LoopPose: 0
+    Default: 0
   - Name: run_Take_001
     LoopTime: 0
     LoopPose: 0
+    Default: 0
   - Name: idle_Take_001
     LoopTime: 0
     LoopPose: 0
+    Default: 0
   - Name: dead_Take_001
     LoopTime: 0
     LoopPose: 0
+    Default: 0
   - Name: hit_piecemeal_01_Take_001
     LoopTime: 0
     LoopPose: 0
+    Default: 0
   - Name: hit_piecemeal_02_Take_001
     LoopTime: 0
     LoopPose: 0
+    Default: 0
   - Name: hit_piecemeal_03_Take_001
     LoopTime: 0
     LoopPose: 0
+    Default: 0
   - Name: kick_Take_001
     LoopTime: 0
     LoopPose: 0
+    Default: 0
   - Name: put_meat_in_a_meat_grinder_Take_001
     LoopTime: 0
     LoopPose: 0
+    Default: 0
   - Name: talk_Take_001
     LoopTime: 0
     LoopPose: 0
+    Default: 1
   - Name: clear_Take_001
     LoopTime: 0
     LoopPose: 0
+    Default: 0
   - Name: action_Take_002
     LoopTime: 0
     LoopPose: 0
+    Default: 0
   - Name: run_tray_333_Take_001
     LoopTime: 0
     LoopPose: 0
+    Default: 0
   - Name: taking_damage_222_Take_001
     LoopTime: 0
     LoopPose: 0
+    Default: 0
   - Name: idle_podnos_333_Take_001
     LoopTime: 0
     LoopPose: 0
+    Default: 0
   - Name: run_meat_Take_001
     LoopTime: 0
     LoopPose: 0
+    Default: 0
   - Name: run_empty_Take_001
     LoopTime: 0
     LoopPose: 0
+    Default: 0
   - Name: idle_meat_02_Take_001
     LoopTime: 0
     LoopPose: 0
+    Default: 0
   _importMaterials: 1
   _materialsLocation: 0
   _materialsNaming: 1
