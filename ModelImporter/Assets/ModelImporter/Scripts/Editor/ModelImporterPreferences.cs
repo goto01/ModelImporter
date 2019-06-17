@@ -11,6 +11,7 @@ namespace ModelImporter.Editor
 		{
 			DrawLanguageSelector();
 			DrawEnablingEditor();
+			DrawScaleEpsilonEditor();
 		}
 
 		private static void DrawLanguageSelector()
@@ -31,6 +32,12 @@ namespace ModelImporter.Editor
 		{
 			PrefsHelper.ModeImporterActive = 
 				EditorGUILayout.Toggle(TextResourcesHelper.Preferences.ActiveLabel, PrefsHelper.ModeImporterActive);
+		}
+
+		private static void DrawScaleEpsilonEditor()
+		{
+			PrefsHelper.ModelImporterScaleDefaultEpsilon = EditorGUILayout.FloatField("Scale epsilon",
+				PrefsHelper.ModelImporterScaleDefaultEpsilon);
 		}
 	}
 }

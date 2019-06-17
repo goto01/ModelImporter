@@ -28,7 +28,7 @@ namespace ModelImporter.Editor.Helper.Animator
 				Debug.LogError("Infinite rec or rec depth limit exceeds");
 				return;
 			}
-			if (Vector3.Distance(Vector3.one, transform.localScale) > Mathf.Epsilon)
+			if (Vector3.Distance(Vector3.one, transform.localScale) > PrefsHelper.ModelImporterScaleDefaultEpsilon)
 			{
 				gameObjects.Add(transform.gameObject);
 				return;
