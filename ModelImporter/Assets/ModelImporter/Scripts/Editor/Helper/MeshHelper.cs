@@ -103,8 +103,7 @@ namespace ModelImporter.Editor.Helper
 					var normal = normal0 + normal1;
 					colors[index0] = colors[index1] = normal.normalized;
 				}
-			//mesh.colors = colors.Select(x=> new Color(x.x, x.y, x.z)).ToArray();
-			mesh.colors = normals.Select(x=> new Color(x.x, x.y, x.z)).ToArray();
+			mesh.colors = colors.Select(x=> new Color(x.x, x.y, x.z)).ToArray();
 			EditorUtility.SetDirty(mesh);
 		}
 	}

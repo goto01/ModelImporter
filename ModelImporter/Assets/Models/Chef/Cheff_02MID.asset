@@ -14,7 +14,7 @@ MonoBehaviour:
   _generateMesh: 1
   _normals: 1
   _normalsMode: 0
-  _smoothingAngle: 87.1
+  _smoothingAngle: 100
   _animationsData:
   - Name: talk_01_Take_002
     LoopTime: 0

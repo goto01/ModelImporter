@@ -18,6 +18,7 @@
 		_OutlineColor ("Color", color) = (0, 0, 0, 1)
 		[MaterialToggle] _OutlineByDistance ("Outline Width Affected By View Distance", Float ) = 0
 		_OutlineDistanceMaxWidth ("Distance of max width", Float ) = 5
+		[MaterialToggle(Normal, 0, Color, 1)] _NormalProvider("Normal provider", float) = 0
     }
     SubShader {
         Tags {
@@ -59,6 +60,7 @@
             uniform half4 _OutlineColor;
             uniform fixed _OutlineByDistance;
 			uniform half _OutlineDistanceMaxWidth;
+			float _NormalProvider;
             
             uniform fixed _TexturePatternStyle;
             struct VertexInput {
@@ -85,7 +87,7 @@
                 float4 objPos = mul ( unity_ObjectToWorld, float4(0,0,0,1) );
                 half node_1229 = distance(objPos.rgb,_WorldSpaceCameraPos);
 
-				float3 _OEM = UnityObjectToWorldNormal(v.vertexColor.rgb);
+				float3 _OEM = lerp(v.normal, v.vertexColor.rgb, _NormalProvider);
 				//float3 _OEM = v.vertexColor.rgb;
 				//_OEM = v.normal;
 
@@ -186,7 +188,6 @@
 				final_rgb *= high_light_color;
                 UNITY_APPLY_FOG(i.fogCoord, final_rgb);
 				float4 final_rbga = float4(final_rgb, 1);
-				final_rbga.rgb = i.normal.rgb;
                 return final_rbga;
             }
             ENDCG
