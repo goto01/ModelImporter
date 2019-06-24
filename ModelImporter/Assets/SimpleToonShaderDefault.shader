@@ -65,6 +65,8 @@
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
                 float2 texcoord0 : TEXCOORD0;
+                float2 uv1 : TEXCOORD1;
+                float2 uv2 : TEXCOORD2;
                 float4 vertexColor : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
             };
@@ -83,7 +85,9 @@
                 float4 objPos = mul ( unity_ObjectToWorld, float4(0,0,0,1) );
                 half node_1229 = distance(objPos.rgb,_WorldSpaceCameraPos);
 
-				float3 _OEM = v.normal;
+				float3 _OEM = UnityObjectToWorldNormal(v.vertexColor.rgb);
+				//float3 _OEM = v.vertexColor.rgb;
+				//_OEM = v.normal;
 
                 o.pos = UnityObjectToClipPos(float4(v.vertex.xyz + _OEM*lerp(_OutlineWidth, clamp(_OutlineWidth*node_1229, _OutlineWidth, _OutlineDistanceMaxWidth), _OutlineByDistance)*0.01,1));
                
@@ -150,6 +154,7 @@
                 float3 bitangentDir : TEXCOORD4;
                 float4 vertexColor : COLOR;
                 float4 projPos : TEXCOORD5;
+				float3 normal : NORMAL;
                 LIGHTING_COORDS(6,7)
                 UNITY_FOG_COORDS(8)
             };
@@ -157,6 +162,7 @@
             VertexOutput vert (VertexInput v) {
                 VertexOutput o = (VertexOutput)0;
 				UNITY_SETUP_INSTANCE_ID (v);
+				o.normal = v.normal;
                 o.uv0 = v.texcoord0;
                 o.vertexColor = v.vertexColor;
                 o.normalDir = UnityObjectToWorldNormal(v.normal);
@@ -180,6 +186,7 @@
 				final_rgb *= high_light_color;
                 UNITY_APPLY_FOG(i.fogCoord, final_rgb);
 				float4 final_rbga = float4(final_rgb, 1);
+				final_rbga.rgb = i.normal.rgb;
                 return final_rbga;
             }
             ENDCG

@@ -18,8 +18,9 @@ namespace ModelImporter.Data
 			public bool Default;
 		}
 
-#if UNITY_EDITOR		
-		[SerializeField] private ModelImporterNormals _normals = ModelImporterNormals.Calculate;
+#if UNITY_EDITOR
+		[SerializeField] private bool _generateMesh;
+		[SerializeField] private ModelImporterNormals _normals = ModelImporterNormals.Import;
 		[SerializeField] private ModelImporterNormalCalculationMode _normalsMode;
 		[SerializeField] private float _smoothingAngle = 180;
 		[SerializeField] private List<AnimationData> _animationsData;
@@ -30,6 +31,12 @@ namespace ModelImporter.Data
 
 		public int AnimationsNumber { get { return _animationsData.Count; } }
 		public List<AnimationData> AnimationsData{get { return _animationsData; }}
+
+		public bool GenerateMesh
+		{
+			get { return _generateMesh; }
+			set { _generateMesh = value; }
+		}
 		public ModelImporterNormals Normals
 		{
 			get { return _normals; }

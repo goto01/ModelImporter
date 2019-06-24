@@ -226,27 +226,27 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: boby
-    second: {fileID: 2100000, guid: eb7cdd662bf0824429c763fa80952f61, type: 2}
+    second: {fileID: 2100000, guid: 3eb8d3cb7a79e6f428ae0f937731eb3a, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: knife1
-    second: {fileID: 2100000, guid: ab9fae807e7287f4f80d83a371bb4acb, type: 2}
+    second: {fileID: 2100000, guid: 524a935d160c6134aab6a829fd508290, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: paeked_cap1
-    second: {fileID: 2100000, guid: e019ef43cebfed944b6fe2034f371011, type: 2}
+    second: {fileID: 2100000, guid: aa16f0e35fb5ccf4b9abf6b8a63e21c5, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: pult2
-    second: {fileID: 2100000, guid: ecac0c4acdb54af4aaf3c43c3507fb68, type: 2}
+    second: {fileID: 2100000, guid: c114ebc1737a664409071021db03f904, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: tray2
-    second: {fileID: 2100000, guid: 4cd3addff3d1b764ba59f3c45e167c9a, type: 2}
+    second: {fileID: 2100000, guid: e12784b9a59792549ac1229400832e60, type: 2}
   materials:
     importMaterials: 1
     materialName: 1
@@ -791,7 +791,7 @@ ModelImporter:
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
+    optimizeMeshForGPU: 0
     keepQuads: 0
     weldVertices: 1
     preserveHierarchy: 0
@@ -804,7 +804,7 @@ ModelImporter:
     previousCalculatedGlobalScale: 0.01
     hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
-    normalSmoothAngle: 180
+    normalSmoothAngle: 87.1
     normalImportMode: 1
     tangentImportMode: 3
     normalCalculationMode: 0

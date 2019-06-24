@@ -15,24 +15,32 @@ namespace ModelImporter.Editor.Helper
 			var assetPath = AssetDatabase.GetAssetPath(gameObject);
 			InitializeDirectory(assetPath);
 			var renderers = gameObject.GetComponentsInChildren<Renderer>();
+			var meshes = new List<Mesh>();
 			for (var index = 0; index < renderers.Length; index++)
-				if (renderers[index] is MeshRenderer) HandleRenderer((MeshRenderer) renderers[index], assetPath);
-				else HandleSkinnedRenderer((SkinnedMeshRenderer) renderers[index], assetPath);
+				if (renderers[index] is MeshRenderer) meshes.Add(HandleRenderer((MeshRenderer) renderers[index], assetPath));
+				else meshes.Add(HandleSkinnedRenderer((SkinnedMeshRenderer) renderers[index], assetPath));
+			BakeNormalsToColor(meshes);
+			EditorUtility.SetDirty(gameObject);
 		}
 
-		private static void HandleRenderer(MeshRenderer renderer, string assetPath)
+		private static Mesh HandleRenderer(MeshRenderer renderer, string assetPath)
 		{
-			var mesh = renderer.GetComponent<MeshFilter>().sharedMesh;
-			CreateMesh(mesh, assetPath);
+			var meshFilter = renderer.GetComponent<MeshFilter>();
+			var mesh = meshFilter.sharedMesh;
+			var newMesh = CreateMesh(mesh, assetPath);
+			meshFilter.sharedMesh = newMesh;
+			return newMesh;
 		}
 		
-		private static void HandleSkinnedRenderer(SkinnedMeshRenderer renderer, string assetPath)
+		private static Mesh HandleSkinnedRenderer(SkinnedMeshRenderer renderer, string assetPath)
 		{
 			var mesh = renderer.sharedMesh;
-			CreateMesh(mesh, assetPath);
+			var newMesh = CreateMesh(mesh, assetPath);
+			renderer.sharedMesh = newMesh;
+			return newMesh;
 		}
 
-		private static void CreateMesh(Mesh mesh, string assetPath)
+		private static Mesh CreateMesh(Mesh mesh, string assetPath)
 		{
 			var path = GetMeshPath(assetPath, mesh.name);
 			var newMesh = GetMesh(path);
@@ -41,49 +49,18 @@ namespace ModelImporter.Editor.Helper
 			newMesh.triangles = mesh.triangles.ToArray();
 			newMesh.normals = mesh.normals.ToArray();
 			newMesh.tangents = mesh.tangents.ToArray();
+			newMesh.colors = mesh.colors.ToArray();
 			newMesh.uv = mesh.uv;
+			newMesh.boneWeights = mesh.boneWeights;
+			newMesh.bindposes = mesh.bindposes;
+			newMesh.bounds = mesh.bounds;
 			EditorUtility.SetDirty(newMesh);
+			return newMesh;
 		}
-		
-#region Bake normal to color
-		
-		public static void BakeNormalsToColor(GameObject gameObject)
-		{
-			var assetPath = AssetDatabase.GetAssetPath(gameObject);
-			InitializeDirectory(assetPath);
-			var renderers = gameObject.GetComponentsInChildren<Renderer>();
-			for (var index = 0; index < renderers.Length; index++)
-				if (renderers[index] is MeshRenderer) BakeNormalRenderer((MeshRenderer) renderers[index], assetPath);
-				else BakeNormalSkinnedRenderer((SkinnedMeshRenderer) renderers[index], assetPath);
-		}
-		
-		private static void BakeNormalRenderer(MeshRenderer renderer, string assetPath)
-		{
-			var mesh = renderer.GetComponent<MeshFilter>().sharedMesh;
-			BakeMesh(mesh, assetPath);
-		}
-		
-		private static void BakeNormalSkinnedRenderer(SkinnedMeshRenderer renderer, string assetPath)
-		{
-			var mesh = renderer.sharedMesh;
-			BakeMesh(mesh, assetPath);
-		}
-
-		private static void BakeMesh(Mesh mesh, string assetPath)
-		{
-			var path = GetMeshPath(assetPath, mesh.name);
-			var newMesh = GetMesh(path);
-			newMesh.colors = mesh.normals.Select(x => new Color(x.x, x.y, x.z, 1)).ToArray();
-			EditorUtility.SetDirty(newMesh);
-		}
-		
-#endregion
-	
 
 		private static Mesh GetMesh(string path)
 		{
 			var mesh = AssetDatabase.LoadAssetAtPath<Mesh>(path);
-			Debug.Log(mesh);
 			if (mesh != null) return mesh;
 			mesh = new Mesh();
 			AssetDatabase.CreateAsset(mesh, path);
@@ -99,8 +76,36 @@ namespace ModelImporter.Editor.Helper
 		
 		private static string GetMeshPath(string assetPath, string name)
 		{
+			name = name.Replace(":", "_");
 			var directory = Path.GetDirectoryName(assetPath);
 			return string.Format("{0}/Meshes/{1}.mesh", directory, name);
+		}
+
+		private static void BakeNormalsToColor(List<Mesh> meshes)
+		{
+			for (var index = 0; index < meshes.Count; index++)
+				BakeNormalsToColor(meshes[index]);
+		}
+
+		private static void BakeNormalsToColor(Mesh mesh)
+		{
+			var vertices = mesh.vertices;
+			var normals = mesh.normals;
+			var colors = new Vector3[normals.Length];
+			for (var index0 = 0; index0 < normals.Length; index0++)
+				for (var index1 = 0; index1 < normals.Length; index1++)
+				{
+					if (Vector3.Distance(vertices[index0], vertices[index1]) > Mathf.Epsilon) continue;
+					var normal0 = colors[index0].magnitude > Mathf.Epsilon ? colors[index0] : 
+						normals[index0];
+					var normal1 = colors[index1].magnitude > Mathf.Epsilon ? colors[index1] : 
+						normals[index1];
+					var normal = normal0 + normal1;
+					colors[index0] = colors[index1] = normal.normalized;
+				}
+			//mesh.colors = colors.Select(x=> new Color(x.x, x.y, x.z)).ToArray();
+			mesh.colors = normals.Select(x=> new Color(x.x, x.y, x.z)).ToArray();
+			EditorUtility.SetDirty(mesh);
 		}
 	}
 }

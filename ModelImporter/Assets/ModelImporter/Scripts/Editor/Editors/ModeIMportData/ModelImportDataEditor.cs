@@ -50,6 +50,7 @@ namespace ModelImporter.Editor.Editors.ModeImportData
 
 		private static void DrawModelEditor(ModelImportData mid)
 		{
+			mid.GenerateMesh = EditorGUILayout.Toggle("Generate mesh", mid.GenerateMesh);
 			mid.Normals = (ModelImporterNormals)EditorGUILayout.EnumPopup("Normals", 
 				mid.Normals);
 			GUI.enabled = mid.Normals == ModelImporterNormals.Calculate;

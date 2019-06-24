@@ -24,12 +24,7 @@ ModelImporter:
     7400000: activation
     7400002: idle
     9500000: //RootNode
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: conditioner
-    second: {fileID: 2100000, guid: 5d99f04b8cb673644a27fe4e0ccfeecf, type: 2}
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 1

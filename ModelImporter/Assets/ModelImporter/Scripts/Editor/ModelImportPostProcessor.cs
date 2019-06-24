@@ -71,7 +71,8 @@ namespace ModelImporter.Editor
 			ModelImportDataHelper.SetModelImporterImportSettings(sender.ModelImporter, sender.ModelImportData);
 			_state = SkipImportAfterReimportState;
 			AssetDatabase.ImportAsset(sender.ModelImporter.assetPath, ImportAssetOptions.ForceUpdate);
-			PrefabHelper.CreateOrReplacePrefab(sender.ModelPath);
+			var prefab = PrefabHelper.CreateOrReplacePrefab(sender.ModelPath);
+			if (sender.ModelImportData.GenerateMesh) MeshHelper.CopyMesh(prefab);
 			GenerateAnimatorIfRequired(sender.ModelImporter, sender.ModelImportData);
 		}
 
