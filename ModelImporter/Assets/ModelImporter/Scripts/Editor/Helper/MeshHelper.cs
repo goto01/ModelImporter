@@ -46,7 +46,6 @@ namespace ModelImporter.Editor.Helper
 			var newMesh = GetMesh(path);
 			newMesh.Clear();
 			newMesh.vertices = mesh.vertices.ToArray();
-			newMesh.triangles = mesh.triangles.ToArray();
 			newMesh.normals = mesh.normals.ToArray();
 			newMesh.tangents = mesh.tangents.ToArray();
 			newMesh.colors = mesh.colors.ToArray();
@@ -54,6 +53,10 @@ namespace ModelImporter.Editor.Helper
 			newMesh.boneWeights = mesh.boneWeights;
 			newMesh.bindposes = mesh.bindposes;
 			newMesh.bounds = mesh.bounds;
+			newMesh.subMeshCount = mesh.subMeshCount;
+			for (var index = 0; index < mesh.subMeshCount; index++)
+				newMesh.SetTriangles(mesh.GetTriangles(index), index);
+			newMesh.subMeshCount = mesh.subMeshCount;
 			EditorUtility.SetDirty(newMesh);
 			return newMesh;
 		}

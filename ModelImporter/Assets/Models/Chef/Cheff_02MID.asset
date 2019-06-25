@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Name: Cheff_02MID
   m_EditorClassIdentifier: 
   _generateMesh: 1
-  _normals: 1
+  _normals: 0
   _normalsMode: 0
-  _smoothingAngle: 100
+  _smoothingAngle: 180
   _animationsData:
   - Name: talk_01_Take_002
     LoopTime: 0
@@ -55,7 +55,7 @@ MonoBehaviour:
   - Name: talk_Take_001
     LoopTime: 0
     LoopPose: 0
-    Default: 1
+    Default: 0
   - Name: clear_Take_001
     LoopTime: 0
     LoopPose: 0
