@@ -33,7 +33,10 @@ namespace ModelImporter.Editor.Helper
 
 		private static GameObject ReplacePrefab(GameObject model, GameObject prefab)
 		{
-			return PrefabUtility.ReplacePrefab(model, prefab, ReplacePrefabOptions.ReplaceNameBased);
+			ComponentsHelper.MakeSnapshot(prefab);
+			prefab =  PrefabUtility.ReplacePrefab(model, prefab, ReplacePrefabOptions.ConnectToPrefab);
+			ComponentsHelper.SetSnapshot(prefab);
+			return prefab;
 		}
 		
 		private static GameObject CreatePrefab(GameObject model, string prefabPath)
