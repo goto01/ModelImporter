@@ -42,6 +42,16 @@ namespace ModelImporter.Editor
 				wrongScaleWindow.Initialize(gameObjectsWithWrongScale, assetPath);
 				return;
 			}
+			if (!ModelImportDataHelper.CheckForRootPosition(model))
+			{
+				Dialog.ShowDialog<WrongPositionOrRotationWindow>("Wrong position", DialogType.Yes);
+				return;
+			}
+			if (!ModelImportDataHelper.CheckForRootRotation(model))
+			{
+				Dialog.ShowDialog<WrongPositionOrRotationWindow>("Wrong rotation", DialogType.Yes);
+				return;
+			}
 			var modelImportData = ModelImportDataHelper.LoadModeImportData(assetPath);
 			if (modelImportData != null)
 			{

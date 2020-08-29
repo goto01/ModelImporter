@@ -1,3 +1,4 @@
+using ModelImporter.Editor.Helper;
 using ModelImporter.Editor.Helper.Animator;
 using UnityEditor;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace ModelImporter.Editor
 			DrawLanguageSelector();
 			DrawEnablingEditor();
 			DrawScaleEpsilonEditor();
+			DrawPositionMaxMagnitudeEditor();
+			DrawRotationMaxMagnitudeEditor();
 		}
 
 		private static void DrawLanguageSelector()
@@ -38,6 +41,18 @@ namespace ModelImporter.Editor
 		{
 			PrefsHelper.ModelImporterScaleDefaultEpsilon = EditorGUILayout.FloatField("Scale epsilon",
 				PrefsHelper.ModelImporterScaleDefaultEpsilon);
+		}
+
+		private static void DrawPositionMaxMagnitudeEditor()
+		{
+			PrefsHelper.ModelImporterPositionMaxMagnitude = EditorGUILayout.FloatField("Position max magnitude",
+				PrefsHelper.ModelImporterPositionMaxMagnitude);
+		}
+		
+		private static void DrawRotationMaxMagnitudeEditor()
+		{
+			PrefsHelper.ModelImporterRotationMaxMagnitude = EditorGUILayout.FloatField("Rotation max magnitude",
+				PrefsHelper.ModelImporterRotationMaxMagnitude);
 		}
 	}
 }

@@ -4,7 +4,8 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -17,11 +18,11 @@ MonoBehaviour:
   _smoothingAngle: 180
   _animationsData:
   - Name: activation
-    LoopTime: 1
+    LoopTime: 0
     LoopPose: 0
-    Default: 1
+    Default: 0
   - Name: idle
-    LoopTime: 1
+    LoopTime: 0
     LoopPose: 0
     Default: 0
   _importMaterials: 1

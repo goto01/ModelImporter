@@ -37,7 +37,21 @@ namespace ModelImporter.Editor.Helper.Animator
 				CheckChildTransforms(transform.GetChild(index), gameObjects, depth + 1);
 		}
 		
-#endregion		
+#endregion
+
+#region Check for posiition and rotation
+
+		public static bool CheckForRootPosition(GameObject gameObject)
+		{
+			return !(gameObject.transform.localPosition.magnitude > PrefsHelper.ModelImporterPositionMaxMagnitude);
+		}
+
+		public static bool CheckForRootRotation(GameObject gameObject)
+		{
+			return !(gameObject.transform.eulerAngles.magnitude > PrefsHelper.ModelImporterRotationMaxMagnitude);
+		}
+		
+#endregion
 		
 		public static ModelImportData LoadModeImportData(string assetPath)
 		{
